@@ -4,7 +4,7 @@ import glob
 class handler(BaseHTTPRequestHandler):
     def do_GET(self):
         try:
-            index = open(plik).read()
+            index = open(NazwaPliku).read()
             self.send_response(200)
         except:
             index = "blad!"
@@ -14,7 +14,7 @@ class handler(BaseHTTPRequestHandler):
         self.wfile.write(index.encode()) #Encode - zamienia string na bity
         
 def main():
-    global plik
+    global NazwaPliku
     htmllista = [f for f in glob.glob("*.html")] #sprawdza plikiw danym folderze o rozszerzeniu .html
     portinput = int(input("Podaj port:"))
     if portinput == 0:
@@ -37,10 +37,8 @@ def main():
         else:
             break
             
-    port = portinput #port
-    plik = NazwaPliku
     serwer = HTTPServer(('', portinput), handler)
-    print(f"Serwer działa na porcie {port}, nazwa pliku: {NazwaPliku}")
+    print(f"Serwer działa na porcie {portinput}, nazwa pliku: {NazwaPliku}")
     serwer.serve_forever()
     
 
